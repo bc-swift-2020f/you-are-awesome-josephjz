@@ -8,6 +8,8 @@
 
 import UIKit
 
+import AVFoundation //needed for sounds
+
 class ViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
@@ -19,6 +21,8 @@ class ViewController: UIViewController {
     var messageNumber = -1
     var imageNumber = -1
     var totalNumberOfImages = 9
+    var audioPlayer : AVAudioPlayer!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +50,18 @@ class ViewController: UIViewController {
             
         imageNumber = newImageNumber
         imageView.image = UIImage(named: "image\(imageNumber)")
+        
+        if let sound = NSDataAsset(name: "sound0") {
+            do {
+                try audioPlayer = AVAudioPlayer(data: sound.data)
+                audioPlayer.play()
+            } catch {
+                print("👺Error: \(error.localizedDescription) could not initialize player")
+            }
+        }
+        else {
+            print("👺Error: could not read file")
+        }
     }
 }
    
