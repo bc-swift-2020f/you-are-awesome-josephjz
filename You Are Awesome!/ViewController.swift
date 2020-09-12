@@ -13,8 +13,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var messageLabel: UILabel!
     
-    var messageNumber = 0
-    var imageNumber = 0
+    
+    //setting these to numbers that arent possible for the imageNumbers so the initial image / message doesnt get skipped if its 0
+    
+    var messageNumber = -1
+    var imageNumber = -1
     var totalNumberOfImages = 9
     
     override func viewDidLoad() {
@@ -26,19 +29,21 @@ class ViewController: UIViewController {
     @IBAction func messageButtonPressed(_ sender: UIButton) {
         let messages = ["You are awesome!", "You are great!", "You are fantastic!", "You are legendary!", "You are swifty!", "You are funny!", "You are magical!"]
         
-        var newMessageNumber = Int.random(in: 0...messages.count-1)
+        var newMessageNumber : Int
         
-        while messageNumber == newMessageNumber {
+        repeat {
             newMessageNumber = Int.random(in: 0...messages.count-1)
-        }
+        } while  messageNumber == newMessageNumber
+        
         messageNumber = newMessageNumber
         messageLabel.text = messages[messageNumber]
         
-        var newImageNumber = Int.random(in: 0...totalNumberOfImages)
+        var newImageNumber : Int
         
-        while imageNumber == newImageNumber {
+        repeat {
             newImageNumber = Int.random(in: 0...totalNumberOfImages)
-        }
+        } while imageNumber == newImageNumber
+            
         imageNumber = newImageNumber
         imageView.image = UIImage(named: "image\(imageNumber)")
     }
