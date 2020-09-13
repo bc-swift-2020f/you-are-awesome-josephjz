@@ -13,7 +13,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var messageLabel: UILabel!
-        
+    @IBOutlet weak var playSoundSwitch: UISwitch!
+    
     var messageNumber = -1        //setting these to numbers that arent possible for the imageNumbers so the initial image /                message doesnt get skipped if its 0
     var imageNumber = -1
     var soundNumber = -1
@@ -51,7 +52,7 @@ class ViewController: UIViewController {
         } while  originalNumber == newNonRepeatingRandom
         return newNonRepeatingRandom
     }
-
+    
     //  messageButtonPressed() is a user event, IBAction that we created
     @IBAction func messageButtonPressed(_ sender: UIButton) {
         let messages = ["You are awesome!", "You are great!", "You are fantastic!", "You are legendary!", "You are swifty!", "You are funny!", "You are magical!"]
@@ -61,11 +62,20 @@ class ViewController: UIViewController {
         imageNumber = nonRepeatingRandom(originalNumber: imageNumber, upperBounds: totalNumberOfImages-1)
         soundNumber = nonRepeatingRandom(originalNumber: soundNumber, upperBounds: totalNumberOfSounds-1)
         
+        
         // generate non-repeating message, image, and sound
         messageLabel.text = messages[messageNumber]
         imageView.image = UIImage(named: "image\(imageNumber)")
-        playSound(soundName: "sound\(soundNumber)")
+        if playSoundSwitch.isOn {
+            playSound(soundName: "sound\(soundNumber)")
+        }
+    }
+    
+    @IBAction func playSoundToggled(_ sender: UISwitch) {
+        if !sender.isOn && audioPlayer != nil {
+            audioPlayer.stop()
+        }
     }
 }
-   
-  
+
+
