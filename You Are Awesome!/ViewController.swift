@@ -15,20 +15,22 @@ class ViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var playSoundSwitch: UISwitch!
     
-    var messageNumber = -1        //setting these to numbers that arent possible for the imageNumbers so the initial image /                message doesnt get skipped if its 0
+    var messageNumber = -1        //setting these to numbers that arent possible for the imageNumbers so the initial image / message doesnt get skipped if its 0
     var imageNumber = -1
     var soundNumber = -1
     var totalNumberOfImages = 10
     var totalNumberOfSounds = 6
+    
     var audioPlayer : AVAudioPlayer!
     
-    
     //  viewDidLoad() is a system event, called by the operating system when the view controller loads for the first time
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     // playSound() is a helper function
+    
     func playSound(soundName : String) {
         if let sound = NSDataAsset(name: soundName) {
             do {
@@ -45,6 +47,7 @@ class ViewController: UIViewController {
     // parameter originalNumber cleans up the triple usage of message/image/soundNumer
     // upperBounds represents the Max of any random number generated
     // returns a random Int value between 0 and upperBounds
+    
     func nonRepeatingRandom(originalNumber : Int, upperBounds : Int) -> Int {
         var newNonRepeatingRandom : Int
         repeat {
@@ -54,18 +57,20 @@ class ViewController: UIViewController {
     }
     
     //  messageButtonPressed() is a user event, IBAction that we created
+    
     @IBAction func messageButtonPressed(_ sender: UIButton) {
         let messages = ["You are awesome!", "You are great!", "You are fantastic!", "You are legendary!", "You are swifty!", "You are funny!", "You are magical!"]
         
         // using helper function nonRepeatingRandom() return value to update message/image/soundNumber
+        
         messageNumber = nonRepeatingRandom(originalNumber: messageNumber, upperBounds: messages.count-1)
         imageNumber = nonRepeatingRandom(originalNumber: imageNumber, upperBounds: totalNumberOfImages-1)
         soundNumber = nonRepeatingRandom(originalNumber: soundNumber, upperBounds: totalNumberOfSounds-1)
         
-        
         // generate non-repeating message, image, and sound
         messageLabel.text = messages[messageNumber]
         imageView.image = UIImage(named: "image\(imageNumber)")
+        
         if playSoundSwitch.isOn {
             playSound(soundName: "sound\(soundNumber)")
         }
